@@ -1,0 +1,1083 @@
+{
+  "comparison": {
+    "all": 9.056154767201219e-21,
+    "click": 1.3596377700868817e-14,
+    "form": 4.197112101344256e-10
+  },
+  "model_sha256": {
+    "qwen2.5-0.5b-instruct-q4_k_m": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "qwen2.5-1.5b-instruct-q4_k_m": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+  },
+  "models": {
+    "qwen2.5-0.5b-instruct-q4_k_m": {
+      "abstention": {
+        "calibration_episodes": 150,
+        "signals": {
+          "claim": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 141,
+              "coverage": 0.94,
+              "failures": 111,
+              "risk": 0.7872340425531915,
+              "risk_ci": [
+                0.7125314402796394,
+                0.8467007065491432
+              ]
+            }
+          },
+          "judge": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 141,
+              "coverage": 0.94,
+              "failures": 111,
+              "risk": 0.7872340425531915,
+              "risk_ci": [
+                0.7125314402796394,
+                0.8467007065491432
+              ]
+            }
+          },
+          "ptrue": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 141,
+              "coverage": 0.94,
+              "failures": 111,
+              "risk": 0.7872340425531915,
+              "risk_ci": [
+                0.7125314402796394,
+                0.8467007065491432
+              ]
+            }
+          },
+          "verbal": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 141,
+              "coverage": 0.94,
+              "failures": 111,
+              "risk": 0.7872340425531915,
+              "risk_ci": [
+                0.7125314402796394,
+                0.8467007065491432
+              ]
+            }
+          }
+        },
+        "test_episodes": 150
+      },
+      "claims": {
+        "claims_success": 283,
+        "false_success_ci": [
+          0.7404434407792936,
+          0.8347872132674151
+        ],
+        "false_success_claims": 224,
+        "false_success_rate": 0.7915194346289752,
+        "missed_successes": 4,
+        "n": 300,
+        "no_report": 4,
+        "successes": 63,
+        "true_success_claims": 59
+      },
+      "episodes": 300,
+      "forced_reports": 300,
+      "invalid_answers": 11,
+      "missing": {
+        "judge": 0,
+        "ptrue": 4
+      },
+      "per_kind": {
+        "click": {
+          "ci": [
+            0.24536415587260474,
+            0.3719855215282907
+          ],
+          "n": 200,
+          "rate": 0.305,
+          "successes": 61
+        },
+        "form": {
+          "ci": [
+            0.0055019675006616475,
+            0.07001179131757478
+          ],
+          "n": 100,
+          "rate": 0.02,
+          "successes": 2
+        }
+      },
+      "per_task": {
+        "choose-list": {
+          "ci": [
+            0.02786648096169142,
+            0.3010336471864123
+          ],
+          "false_success_claims": 15,
+          "n": 20,
+          "rate": 0.1,
+          "successes": 2
+        },
+        "click-button": {
+          "ci": [
+            0.08065766201776073,
+            0.41601743409331715
+          ],
+          "false_success_claims": 16,
+          "n": 20,
+          "rate": 0.2,
+          "successes": 4
+        },
+        "click-button-sequence": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "click-checkboxes": {
+          "ci": [
+            0.008881448702335523,
+            0.23613119546428119
+          ],
+          "false_success_claims": 19,
+          "n": 20,
+          "rate": 0.05,
+          "successes": 1
+        },
+        "click-dialog": {
+          "ci": [
+            0.6989663528135878,
+            0.9721335190383086
+          ],
+          "false_success_claims": 2,
+          "n": 20,
+          "rate": 0.9,
+          "successes": 18
+        },
+        "click-dialog-2": {
+          "ci": [
+            0.21880653127178018,
+            0.6134185007652458
+          ],
+          "false_success_claims": 12,
+          "n": 20,
+          "rate": 0.4,
+          "successes": 8
+        },
+        "click-link": {
+          "ci": [
+            0.25819785703764037,
+            0.6579146589808726
+          ],
+          "false_success_claims": 11,
+          "n": 20,
+          "rate": 0.45,
+          "successes": 9
+        },
+        "click-option": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "click-tab": {
+          "ci": [
+            0.08065766201776073,
+            0.41601743409331715
+          ],
+          "false_success_claims": 6,
+          "n": 20,
+          "rate": 0.2,
+          "successes": 4
+        },
+        "click-widget": {
+          "ci": [
+            0.4328542750684442,
+            0.818808176876017
+          ],
+          "false_success_claims": 7,
+          "n": 20,
+          "rate": 0.65,
+          "successes": 13
+        },
+        "enter-password": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "enter-text": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "enter-text-2": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "login-user": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "navigate-tree": {
+          "ci": [
+            0.08065766201776073,
+            0.41601743409331715
+          ],
+          "false_success_claims": 16,
+          "n": 20,
+          "rate": 0.2,
+          "successes": 4
+        }
+      },
+      "seconds_mean": 41.46320451591338,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "signals": {
+        "claim": {
+          "auroc": 0.495680128591521,
+          "auroc_ci": [
+            0.4395785984848485,
+            0.5681818181818182
+          ],
+          "brier": 0.76,
+          "ece": 0.76,
+          "mean_failure": 0.9451476793248945,
+          "mean_success": 0.9365079365079365
+        },
+        "judge": {
+          "auroc": 0.25061951644230124,
+          "auroc_ci": [
+            0.12880648642631043,
+            0.42038757511145564
+          ],
+          "brier": 0.596945708807004,
+          "ece": 0.6202711820332776,
+          "mean_failure": 0.8492528951683477,
+          "mean_success": 0.7416172025695082
+        },
+        "ptrue": {
+          "auroc": 0.7980041524345322,
+          "auroc_ci": [
+            0.6722754551440089,
+            0.9377880619076602
+          ],
+          "brier": 0.5713171850693789,
+          "ece": 0.6602432859563621,
+          "mean_failure": 0.8218067628799525,
+          "mean_success": 0.92547274578349
+        },
+        "verbal": {
+          "auroc": 0.3123032616703503,
+          "auroc_ci": [
+            0.1829487494553377,
+            0.4774057136875457
+          ],
+          "brier": 0.699148,
+          "ece": 0.7078666666666665,
+          "mean_failure": 0.908902953586498,
+          "mean_success": 0.8658730158730158
+        }
+      },
+      "steps": 1329,
+      "stops": {
+        "budget": 191,
+        "done": 0,
+        "invalid": 1,
+        "page_done": 108
+      },
+      "success_ci": [
+        0.1677218004303098,
+        0.25961112299414657
+      ],
+      "success_rate": 0.21,
+      "successes": 63
+    },
+    "qwen2.5-1.5b-instruct-q4_k_m": {
+      "abstention": {
+        "calibration_episodes": 150,
+        "signals": {
+          "claim": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 128,
+              "coverage": 0.8533333333333334,
+              "failures": 56,
+              "risk": 0.4375,
+              "risk_ci": [
+                0.3546231306495017,
+                0.5240189889404699
+              ]
+            }
+          },
+          "judge": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 128,
+              "coverage": 0.8533333333333334,
+              "failures": 56,
+              "risk": 0.4375,
+              "risk_ci": [
+                0.3546231306495017,
+                0.5240189889404699
+              ]
+            }
+          },
+          "ptrue": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 128,
+              "coverage": 0.8533333333333334,
+              "failures": 56,
+              "risk": 0.4375,
+              "risk_ci": [
+                0.3546231306495017,
+                0.5240189889404699
+              ]
+            }
+          },
+          "verbal": {
+            "0.05": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.05,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.1": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.1,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "0.2": {
+              "choice": {
+                "certified": false,
+                "delta": 0.05,
+                "target": 0.2,
+                "test_level": 0.0025,
+                "threshold": null
+              },
+              "test": {
+                "accepted": 0,
+                "coverage": 0.0,
+                "failures": 0,
+                "risk": null,
+                "risk_ci": null,
+                "violation": false
+              }
+            },
+            "accept_all_claims": {
+              "accepted": 128,
+              "coverage": 0.8533333333333334,
+              "failures": 56,
+              "risk": 0.4375,
+              "risk_ci": [
+                0.3546231306495017,
+                0.5240189889404699
+              ]
+            }
+          }
+        },
+        "test_episodes": 150
+      },
+      "claims": {
+        "claims_success": 255,
+        "false_success_ci": [
+          0.3949040778222871,
+          0.5162384412339522
+        ],
+        "false_success_claims": 116,
+        "false_success_rate": 0.4549019607843137,
+        "missed_successes": 36,
+        "n": 300,
+        "no_report": 0,
+        "successes": 175,
+        "true_success_claims": 139
+      },
+      "episodes": 300,
+      "forced_reports": 281,
+      "invalid_answers": 0,
+      "missing": {
+        "judge": 0,
+        "ptrue": 0
+      },
+      "per_kind": {
+        "click": {
+          "ci": [
+            0.6228282237882907,
+            0.7500105520775033
+          ],
+          "n": 200,
+          "rate": 0.69,
+          "successes": 138
+        },
+        "form": {
+          "ci": [
+            0.2818236047080924,
+            0.4677947049718467
+          ],
+          "n": 100,
+          "rate": 0.37,
+          "successes": 37
+        }
+      },
+      "per_task": {
+        "choose-list": {
+          "ci": [
+            0.583982565906683,
+            0.9193423379822393
+          ],
+          "false_success_claims": 3,
+          "n": 20,
+          "rate": 0.8,
+          "successes": 16
+        },
+        "click-button": {
+          "ci": [
+            0.7638688045357189,
+            0.9911185512976646
+          ],
+          "false_success_claims": 1,
+          "n": 20,
+          "rate": 0.95,
+          "successes": 19
+        },
+        "click-button-sequence": {
+          "ci": [
+            0.8388748398148705,
+            1.0
+          ],
+          "false_success_claims": 0,
+          "n": 20,
+          "rate": 1.0,
+          "successes": 20
+        },
+        "click-checkboxes": {
+          "ci": [
+            0.05236874548672649,
+            0.36041886664286427
+          ],
+          "false_success_claims": 15,
+          "n": 20,
+          "rate": 0.15,
+          "successes": 3
+        },
+        "click-dialog": {
+          "ci": [
+            0.8388748398148705,
+            1.0
+          ],
+          "false_success_claims": 0,
+          "n": 20,
+          "rate": 1.0,
+          "successes": 20
+        },
+        "click-dialog-2": {
+          "ci": [
+            0.3865814992347542,
+            0.7811934687282198
+          ],
+          "false_success_claims": 8,
+          "n": 20,
+          "rate": 0.6,
+          "successes": 12
+        },
+        "click-link": {
+          "ci": [
+            0.4810271799475211,
+            0.8545227559784271
+          ],
+          "false_success_claims": 4,
+          "n": 20,
+          "rate": 0.7,
+          "successes": 14
+        },
+        "click-option": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "click-tab": {
+          "ci": [
+            0.6989663528135878,
+            0.9721335190383086
+          ],
+          "false_success_claims": 2,
+          "n": 20,
+          "rate": 0.9,
+          "successes": 18
+        },
+        "click-widget": {
+          "ci": [
+            0.6989663528135878,
+            0.9721335190383086
+          ],
+          "false_success_claims": 1,
+          "n": 20,
+          "rate": 0.9,
+          "successes": 18
+        },
+        "enter-password": {
+          "ci": [
+            0.008881448702335523,
+            0.23613119546428119
+          ],
+          "false_success_claims": 19,
+          "n": 20,
+          "rate": 0.05,
+          "successes": 1
+        },
+        "enter-text": {
+          "ci": [
+            0.8388748398148705,
+            1.0
+          ],
+          "false_success_claims": 0,
+          "n": 20,
+          "rate": 1.0,
+          "successes": 20
+        },
+        "enter-text-2": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "login-user": {
+          "ci": [
+            0.0,
+            0.16112516018512965
+          ],
+          "false_success_claims": 20,
+          "n": 20,
+          "rate": 0.0,
+          "successes": 0
+        },
+        "navigate-tree": {
+          "ci": [
+            0.4810271799475211,
+            0.8545227559784271
+          ],
+          "false_success_claims": 3,
+          "n": 20,
+          "rate": 0.7,
+          "successes": 14
+        }
+      },
+      "seconds_mean": 36.362213522533345,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "signals": {
+        "claim": {
+          "auroc": 0.43314285714285716,
+          "auroc_ci": [
+            0.35816914672761324,
+            0.4997403119354317
+          ],
+          "brier": 0.5066666666666667,
+          "ece": 0.5066666666666667,
+          "mean_failure": 0.928,
+          "mean_success": 0.7942857142857143
+        },
+        "judge": {
+          "auroc": 0.44530285714285717,
+          "auroc_ci": [
+            0.22685237105864814,
+            0.6721764262898652
+          ],
+          "brier": 0.4533366490147394,
+          "ece": 0.48059504445963047,
+          "mean_failure": 0.8923189873212742,
+          "mean_success": 0.7717981689392007
+        },
+        "ptrue": {
+          "auroc": 0.42281142857142856,
+          "auroc_ci": [
+            0.21598939541826442,
+            0.6591844325122619
+          ],
+          "brier": 0.4091892125378316,
+          "ece": 0.4058217482903326,
+          "mean_failure": 0.8895411853656191,
+          "mean_success": 0.7808071512552802
+        },
+        "verbal": {
+          "auroc": 0.38752,
+          "auroc_ci": [
+            0.22740732400525254,
+            0.5583549488704498
+          ],
+          "brier": 0.3933166666666667,
+          "ece": 0.37,
+          "mean_failure": 0.9664,
+          "mean_success": 0.9440000000000003
+        }
+      },
+      "steps": 709,
+      "stops": {
+        "budget": 42,
+        "done": 19,
+        "invalid": 0,
+        "page_done": 239
+      },
+      "success_ci": [
+        0.5268355960118954,
+        0.6377239087511918
+      ],
+      "success_rate": 0.5833333333333334,
+      "successes": 175
+    }
+  }
+}
