@@ -30,7 +30,7 @@ def test_render_lines():
     lines = render(flatten(DOM, {6: ["Red", "Blue"]})).splitlines()
     assert lines == [
         '[3] label "Username"',
-        '[4] input_text (id=username, value="ke")',
+        '[4] input_text (html_id=username, value="ke")',
         "[5] input_checkbox (checked)",
         "[6] select (options=Red|Blue)",
         'text "free text"',

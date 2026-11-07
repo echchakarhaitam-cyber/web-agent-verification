@@ -44,7 +44,7 @@ class FakeEnv:
 
 
 def test_agent_reports_done_itself():
-    b = ScriptedBackend(['{"action": "click", "id": 1}', DONE_TRUE, JUDGE_YES])
+    b = ScriptedBackend(['{"action": "click", "ref": 1}', DONE_TRUE, JUDGE_YES])
     env = FakeEnv()
     env.page_done = lambda: False            # the page does not end on its own here
     ep = run_episode(env, b, "t", 0, budget=5)
@@ -55,13 +55,15 @@ def test_agent_reports_done_itself():
 
 
 def test_page_end_forces_a_report_and_reward_is_ground_truth():
-    b = ScriptedBackend(['{"action": "click", "id": 1}', DONE_TRUE, "No"])
+    b = ScriptedBackend(['{"action": "click", "ref": 1}', DONE_TRUE, "No"])
     ep = run_episode(FakeEnv(reward=-1.0), b, "t", 0, budget=5)
     assert ep.stop == "page_done" and ep.claim_forced
     assert ep.claim_success is True and ep.success is False      # a false claim of success
     assert ep.raw_reward == -1.0
     # the forced report prompt is the second call and asks for a report
-    assert "You can take no more actions" in b.calls[1][-1]["content"]
+    assert "can take no more actions" in b.calls[1][0]["content"]
+    assert "Final page:" in b.calls[1][1]["content"]
+    assert ep.claim_raw == DONE_TRUE
 
 
 def test_invalid_answers_are_not_executed_and_stop_after_limit():
@@ -74,7 +76,7 @@ def test_invalid_answers_are_not_executed_and_stop_after_limit():
 
 
 def test_budget_exhaustion_and_bad_ref():
-    answers = ['{"action": "click", "id": 9}'] * 2 + [DONE_TRUE]
+    answers = ['{"action": "click", "ref": 9}'] * 2 + [DONE_TRUE]
     env = FakeEnv()
     ep = run_episode(env, ScriptedBackend(answers), "t", 0, budget=2, use_judge=False)
     assert ep.stop == "budget" and ep.claim_forced
@@ -103,10 +105,10 @@ def test_real_page_success_and_failure(page):
     target = obs.instruction.split('"')[1]
     good = next(e.ref for e in obs.elements if e.tag == "BUTTON" and e.text == target)
     bad = next(e.ref for e in obs.elements if e.tag == "BUTTON" and e.text != target)
-    ep = run_episode(env, ScriptedBackend([f'{{"action":"click","id":{good}}}', DONE_TRUE, "Yes"]),
+    ep = run_episode(env, ScriptedBackend([f'{{"action":"click","ref":{good}}}', DONE_TRUE, "Yes"]),
                      "click-button", 9, budget=3)
     assert ep.success and ep.stop == "page_done" and ep.raw_reward == 1.0
-    ep = run_episode(env, ScriptedBackend([f'{{"action":"click","id":{bad}}}', DONE_TRUE, "Yes"]),
+    ep = run_episode(env, ScriptedBackend([f'{{"action":"click","ref":{bad}}}', DONE_TRUE, "Yes"]),
                      "click-button", 9, budget=3)
     assert not ep.success and ep.raw_reward == -1.0 and ep.claim_success is True
 

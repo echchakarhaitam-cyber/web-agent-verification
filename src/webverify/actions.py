@@ -2,10 +2,14 @@
 
 The model must answer with ONE JSON object, one of
 
-    {"action": "click",  "id": 7}
-    {"action": "type",   "id": 7, "text": "keneth"}
-    {"action": "select", "id": 5, "option": "Blue"}
+    {"action": "click",  "ref": 7}
+    {"action": "type",   "ref": 7, "text": "keneth"}
+    {"action": "select", "ref": 5, "option": "Blue"}
     {"action": "done",   "success": true, "confidence": 80}
+
+Elements are referred to by ``ref``, the number in brackets in the observation. (The pilot
+used the key "id"; the model confused it with the HTML id attribute shown on the page, so the
+key was renamed before the main run; docs/TASK.md, "Pilot".)
 
 ``done`` is the agent's own report: whether it believes the task was accomplished, and how sure
 it is (0-100). That report is what this project tests against the benchmark's reward.
@@ -83,9 +87,9 @@ def first_json_object(text: str) -> str | None:
 
 
 def _ref(obj: dict) -> int:
-    ref = obj.get("id")
+    ref = obj.get("ref")
     if isinstance(ref, bool) or not isinstance(ref, int) or ref < 0:
-        raise ValueError("'id' must be a non-negative integer")
+        raise ValueError("'ref' must be the number in brackets of a page element")
     return ref
 
 
@@ -118,15 +122,41 @@ def parse_action(text: str) -> Action | InvalidAction:
         if kind == "select":
             return Select(_ref(obj), _string(obj, "option"))
         if kind == "done":
-            success = obj.get("success")
-            if not isinstance(success, bool):
-                raise ValueError("'success' must be true or false")
-            conf = obj.get("confidence")
-            if isinstance(conf, bool) or not isinstance(conf, int | float):
-                raise ValueError("'confidence' must be a number")
-            if not 0 <= conf <= 100:
-                raise ValueError("'confidence' must be between 0 and 100")
-            return Done(success, round(conf))
+            return _done_fields(obj)
     except ValueError as err:
         return InvalidAction(text, str(err))
     return InvalidAction(text, f"unknown action {kind!r}")
+
+
+def _done_fields(obj: dict) -> Done:
+    success = obj.get("success")
+    if not isinstance(success, bool):
+        raise ValueError("'success' must be true or false")
+    conf = obj.get("confidence")
+    if isinstance(conf, bool) or not isinstance(conf, int | float):
+        raise ValueError("'confidence' must be a number")
+    if not 0 <= conf <= 100:
+        raise ValueError("'confidence' must be between 0 and 100")
+    return Done(success, round(conf))
+
+
+def parse_report(text: str) -> Done | InvalidAction:
+    """Parse the answer to the REPORT prompt, where no action is possible any more.
+
+    Only ``success`` and ``confidence`` are read, with the same checks as for ``done``; the
+    ``action`` key is ignored. (In the pilot the 1.5B model often wrote ``"action": "click"``
+    in its report while giving both fields, which is unambiguous in that context.)
+    """
+    blob = first_json_object(text)
+    if blob is None:
+        return InvalidAction(text, "no JSON object")
+    try:
+        obj = json.loads(blob)
+    except json.JSONDecodeError as err:
+        return InvalidAction(text, f"invalid JSON: {err.msg}")
+    if not isinstance(obj, dict):
+        return InvalidAction(text, "not a JSON object")
+    try:
+        return _done_fields(obj)
+    except ValueError as err:
+        return InvalidAction(text, str(err))

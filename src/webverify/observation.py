@@ -70,7 +70,7 @@ def flatten(dom: dict, options: dict[int, list[str]] | None = None) -> list[Elem
 
 
 def render(elements: list[Element]) -> str:
-    """One line per element: ``[ref] tag "text" (id=..., value=..., checked)``."""
+    """One line per element: ``[ref] tag "text" (html_id=..., value=..., checked)``."""
     lines = []
     for e in elements:
         if e.ref < 0:                          # text pseudo-element: not actionable
@@ -81,7 +81,7 @@ def render(elements: list[Element]) -> str:
             parts.append(f'"{e.text}"')
         attrs = []
         if e.elem_id:
-            attrs.append(f"id={e.elem_id}")
+            attrs.append(f"html_id={e.elem_id}")
         if e.value is not None and e.tag.startswith(("INPUT", "TEXTAREA")):
             attrs.append(f'value="{e.value}"')
         if e.checked is not None:

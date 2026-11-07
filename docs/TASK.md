@@ -24,6 +24,22 @@ work is reported as done and nobody looks again.
   evaluated on them). If time allows, more seeds are added in blocks of 10 alternating between
   the two halves; the split rule (even block calibration, odd block test) does not change.
 
+## Pilot (seeds 100-104, never used in the results)
+
+Before the main run, the prompts and parsers were checked on pilot seeds 100-104 (0.5B on
+100-103, 1.5B on 104). Changes made because of the pilot, all before any main-run episode:
+
+1. The action key ``id`` was renamed ``ref``, and the HTML id attribute is shown as ``html_id``:
+   the model wrote the HTML id (``"id": "options"``) instead of the element number.
+2. Placeholders such as ``<ref>`` in the instructions were replaced by example values: the
+   0.5B model copied ``<ref>`` literally, which made every answer invalid.
+3. The final report uses its own short prompt instead of the action prompt, and its raw text is
+   logged: with the action prompt the model repeated its last click instead of reporting.
+4. In the report only ``success`` and ``confidence`` are read (``parse_report``): the 1.5B
+   model wrote ``"action": "click"`` in 6 of 15 reports while giving both fields.
+
+Pilot episodes are not part of any reported number.
+
 ## Research questions and analyses
 
 | RQ | question | analysis |
