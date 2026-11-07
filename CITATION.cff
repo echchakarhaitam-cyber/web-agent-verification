@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "webverify: can a small local web agent's claim of success be trusted?"
+authors:
+  - family-names: Echchakar
+    given-names: Haitam
+version: 0.1.0
+date-released: 2026-11-08
+license: MIT
+repository-code: "https://github.com/echchakarhaitam-cyber/web-agent-verification"
+keywords:
+  - web agents
+  - MiniWoB++
+  - self-verification
+  - selective prediction
+  - small language models
