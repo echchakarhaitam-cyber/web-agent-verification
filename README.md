@@ -1,4 +1,4 @@
-# webverify can you trust a small web agent when it says "done"?
+# webverify __ can you trust a small web agent when it says "done"?
 
 A web agent ends every task with a report: *success* or *failure*. If nobody re-checks a reported
 success, a false one is never caught. This project measures how often small local language-model
