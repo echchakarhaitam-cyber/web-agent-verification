@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "webverify"
+version = "0.1.0"
+description = "Can a small local web agent's claim of success be trusted? Self-report vs ground truth and abstention on MiniWoB++."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Haitam Echchakar"}]
+# miniwob: only its HTML task pages are used (MIT); our own Playwright harness drives them.
+dependencies = ["miniwob==1.0", "playwright>=1.40", "numpy>=1.26", "scipy>=1.11"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+llm = ["llama-cpp-python>=0.3"]
+plots = ["matplotlib>=3.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not browser and not llm'"
+markers = [
+    "browser: tests that launch Chromium through Playwright",
+    "llm: tests that load a local model file (WEBVERIFY_MODEL_DIR)",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
