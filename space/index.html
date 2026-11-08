@@ -7,132 +7,247 @@
 <style>
   :root {
     --bg: #f7f7f5; --panel: #ffffff; --ink: #1d232b; --muted: #5d6673; --line: #dde1e6;
-    --accent: #1f5fa8; --ok: #2e7d4f; --bad: #b3261e; --warn: #9a6700;
+    --accent: #1f5fa8; --accent-ink: #ffffff; --ok: #2e7d4f; --bad: #b3261e; --warn: #9a6700;
     --ok-bg: #e1f2e8; --bad-bg: #fbe3e1; --warn-bg: #fbefd2; --n-bg: #eceff2; --sel: #e8eef7;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #12161b; --panel: #1a2027; --ink: #e8ecf1; --muted: #9aa5b1; --line: #2c343e;
-      --accent: #6fa8ff; --ok: #6cc596; --bad: #ff8a80; --warn: #f2c14e;
+      --accent: #6fa8ff; --accent-ink: #0c1117; --ok: #6cc596; --bad: #ff8a80; --warn: #f2c14e;
       --ok-bg: #1f3b2b; --bad-bg: #4a2422; --warn-bg: #44381a; --n-bg: #262d36; --sel: #213044;
     }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink);
          font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 1150px; margin: 0 auto; padding: 28px 16px 40px; }
-  h1 { font-size: 26px; margin: 0 0 6px; }
-  p.lead { margin: 0 0 4px; color: var(--muted); max-width: 880px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 28px 16px 40px; }
+  h1 { font-size: 27px; margin: 0 0 6px; line-height: 1.25; }
+  h2.sec { font-size: 18px; margin: 30px 0 10px; }
+  p.lead { margin: 0 0 6px; color: var(--muted); max-width: 900px; }
   a { color: var(--accent); }
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 18px; }
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
-  .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
-  .big { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; font-weight: 600; }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .row2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+  @media (max-width: 860px) { .row3, .row2 { grid-template-columns: 1fr; } }
+  .big { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
   .sub { font-size: 13px; color: var(--muted); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-  select { font: inherit; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); max-width: 100%; }
-  .list { max-height: 560px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
-  th { position: sticky; top: 0; background: var(--panel); font-size: 12px; color: var(--muted); }
-  tbody tr { cursor: pointer; } tbody tr.sel { background: var(--sel); }
+  .tour { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 900px) { .tour { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .tour { grid-template-columns: 1fr; } }
+  .tour button { text-align: left; font: inherit; cursor: pointer; background: var(--panel); color: var(--ink);
+                 border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .tour button.on { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+  .tour b { display: block; margin-bottom: 4px; }
+  .viewer { display: grid; grid-template-columns: 340px 1fr; gap: 16px; margin-top: 12px; }
+  @media (max-width: 860px) { .viewer { grid-template-columns: 1fr; } }
+  .screen { width: 320px; height: 420px; border: 1px solid var(--line); border-radius: 6px; background: #fff; display: block; }
+  .controls { display: flex; gap: 6px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+  button.ctl { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 8px; padding: 5px 12px; }
+  button.play { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .dots { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+  .dots span { width: 22px; height: 6px; border-radius: 3px; background: var(--n-bg); cursor: pointer; }
+  .dots span.on { background: var(--accent); }
+  .caption { margin-top: 10px; font-size: 14px; min-height: 44px; }
   .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .t-false { background: var(--bad-bg); color: var(--bad); }
   .t-true { background: var(--ok-bg); color: var(--ok); }
   .t-missed { background: var(--warn-bg); color: var(--warn); }
   .t-honest { background: var(--n-bg); color: var(--muted); }
   .kv { display: grid; grid-template-columns: 170px 1fr; gap: 4px 10px; font-size: 14px; }
-  .kv div:nth-child(odd) { color: var(--muted); }
+  .kv > div:nth-child(odd) { color: var(--muted); }
   code, pre { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
   pre { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; margin: 4px 0; white-space: pre-wrap; word-break: break-word; }
-  ol.steps { padding-left: 20px; margin: 6px 0; }
-  ol.steps li { margin-bottom: 6px; }
   .err { color: var(--bad); font-size: 13px; }
-  #status { font-size: 13px; color: var(--muted); }
-  .shots { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
-  .shots figure { margin: 0; }
-  .shots img { border: 1px solid var(--line); border-radius: 4px; display: block; background: #fff; }
-  .shots figcaption { font-size: 12px; color: var(--muted); text-align: center; }
-  details summary { cursor: pointer; font-size: 13px; color: var(--accent); }
-  footer { margin-top: 24px; color: var(--muted); font-size: 13px; }
+  .verdict { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .verdict > div { border-radius: 8px; padding: 10px 12px; border: 1px solid var(--line); }
+  .verdict .lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .verdict .val { font-size: 20px; font-weight: 700; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  select { font: inherit; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); max-width: 100%; }
+  .list { max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { position: sticky; top: 0; background: var(--panel); font-size: 12px; color: var(--muted); }
+  tbody tr { cursor: pointer; } tbody tr.sel { background: var(--sel); }
+  footer { margin-top: 26px; color: var(--muted); font-size: 13px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Can you trust a small web agent when it says "done"?</h1>
-  <p class="lead">A local language-model agent (Qwen2.5 0.5B or 1.5B) was given 15 tasks on
-    MiniWoB++ web pages, 20 times each. At the end it reported success or failure; the page itself
-    recorded whether the task was really done. <b>This page replays the 600 recorded episodes</b>
-    (the models are not running here): pick one to see the page, what the agent saw and did, what
-    it claimed, and the truth. The pages were rebuilt by replaying the recorded answers on the same
-    seeded pages: <b id="replaycheck">all episodes</b> reproduce the recorded outcome exactly.</p>
-  <p class="lead">Code, protocol and full analysis:
-    <a href="https://github.com/echchakarhaitam-cyber/web-agent-verification" target="_blank"
-    rel="noopener">github.com/echchakarhaitam-cyber/web-agent-verification</a>.</p>
+  <h1>Can you trust an AI agent when it says "done"?</h1>
+  <p class="lead">An AI agent that works on websites for you ends each task with a report: done or not done.
+    If you trust that report and it is wrong, the error goes unnoticed. This study measured how often small
+    local agents (Qwen2.5 0.5B and 1.5B) claim success when the task was not done, and whether cheap signals
+    can tell which reports to double-check.</p>
+  <p class="lead">This page <b>replays the 600 recorded episodes</b> (the models do not run here). Every page
+    was rebuilt from its seed and the agent's recorded answers applied again:
+    <b id="replaycheck">all episodes</b> reproduce the recorded outcome exactly.
+    Code, protocol and analysis: <a href="https://github.com/echchakarhaitam-cyber/web-agent-verification"
+    target="_blank" rel="noopener">github.com/echchakarhaitam-cyber/web-agent-verification</a>.</p>
 
-  <div class="cards" id="cards"><div class="card"><div id="status">Loading the recorded episodes...</div></div></div>
+  <h2 class="sec">Why it matters</h2>
+  <div class="row3">
+    <div class="card"><h3>The risk</h3>An agent books, fills in or submits something and says "done". Nobody
+      checks a task reported as done, so a <b>false "done"</b> is the costly error.</div>
+    <div class="card"><h3>What was measured</h3>On 15 web tasks × 20 random versions × 2 models, the agent's
+      report was compared with the page's own record of success, and four signals (its confidence, its
+      token probabilities, a second-opinion judge) were tested as alarms.</div>
+    <div class="card"><h3>What it means</h3>Even the larger model's "done" is often wrong, and none of the
+      signals was reliable enough to decide automatically which reports to trust: with agents this small,
+      <b>a person must check</b>. The method said so instead of giving a false guarantee.</div>
+  </div>
+  <div class="row2" id="cards"><div class="card sub">Loading the recorded episodes...</div></div>
 
-  <div class="grid">
-    <section class="card">
-      <h2>Episodes</h2>
-      <div class="filters">
-        <select id="f_model"></select>
-        <select id="f_task"></select>
-        <select id="f_kind">
-          <option value="">every outcome</option>
-          <option value="false">says success, failed</option>
-          <option value="true">says success, succeeded</option>
-          <option value="missed">says failure or no report, succeeded</option>
-          <option value="honest">says failure or no report, failed</option>
-        </select>
+  <h2 class="sec">Watch four episodes</h2>
+  <div class="tour" id="tour"></div>
+
+  <div class="card viewer" id="viewer" style="margin-top:12px">
+    <div>
+      <img class="screen" id="screen" alt="the task page as the agent saw it">
+      <div class="controls">
+        <button class="ctl" id="prev" aria-label="previous step">◀</button>
+        <button class="ctl play" id="play">▶ Play</button>
+        <button class="ctl" id="next" aria-label="next step">▶</button>
+        <span class="sub" id="pos"></span>
       </div>
-      <div class="sub" id="count"></div>
-      <div class="list"><table>
-        <thead><tr><th>model</th><th>task</th><th>seed</th><th>verdict</th></tr></thead>
-        <tbody id="rows"></tbody>
-      </table></div>
-    </section>
-    <section class="card">
-      <h2>Episode detail</h2>
-      <div id="detail" class="sub">Select an episode.</div>
-    </section>
+      <div class="dots" id="dots"></div>
+      <div class="sub" style="margin-top:6px">Red outline = the element the agent acts on in this step.</div>
+    </div>
+    <div>
+      <div id="head"></div>
+      <div class="caption" id="caption"></div>
+      <details id="seenbox"><summary class="sub" style="cursor:pointer">What the agent saw at this step (the page as text)</summary><pre id="seen"></pre></details>
+      <div id="end"></div>
+    </div>
   </div>
 
-  <footer>Signals: <b>stated confidence</b> = the 0-100 number the agent wrote; <b>P("true")</b> =
-    the model's own token probability for "true" when it wrote its verdict; <b>judge</b> = the
-    same model asked, without the agent's history, whether the final page shows the task done.
-    Ground truth = the MiniWoB++ page's own reward. Models: Qwen2.5-Instruct (Apache 2.0);
-    MiniWoB++ (MIT, Farama Foundation). MIT licence.</footer>
+  <h2 class="sec">Explore all 600 episodes</h2>
+  <div class="card">
+    <div class="filters">
+      <select id="f_model"></select>
+      <select id="f_task"></select>
+      <select id="f_kind">
+        <option value="">every outcome</option>
+        <option value="false">says success, failed</option>
+        <option value="true">says success, succeeded</option>
+        <option value="missed">says failure or no report, succeeded</option>
+        <option value="honest">says failure or no report, failed</option>
+      </select>
+      <span class="sub" id="count"></span>
+    </div>
+    <div class="list"><table>
+      <thead><tr><th>model</th><th>task</th><th>seed</th><th>verdict</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+
+  <footer>Signals: <b>stated confidence</b> = the 0-100 number the agent wrote; <b>P("true")</b> = the model's
+    own token probability for "true" when it wrote its verdict; <b>judge</b> = the same model asked, without the
+    agent's history, whether the final page shows the task done. Ground truth = the MiniWoB++ page's own reward.
+    Models: Qwen2.5-Instruct (Apache 2.0); MiniWoB++ (MIT, Farama Foundation). MIT licence.</footer>
 </main>
 
 <script>
-const COMMIT = "4f22fdbc5af4a3d168df1b456ad47d596f0ee990";
+const COMMIT = "6cc2757bcc86eae80a4f8aa7f46a0c4bb824a5d0";
 const BASE = `https://cdn.jsdelivr.net/gh/echchakarhaitam-cyber/web-agent-verification@${COMMIT}/`;
-const URL_ = BASE + "demo/episodes.json";
+const TOUR = [
+  ["q1.5b_navigate-tree_13", "A real success", "Opens folders one by one until it finds the file, then says it succeeded, and it did."],
+  ["q1.5b_enter-password_0", "A confident false \"done\"", "Fills only the first password field, then reports success with confidence 100. The page says: not done."],
+  ["q1.5b_choose-list_7", "Acting on something that isn't there", "Tries to use element [9], which does not exist, presses Submit without choosing, and still claims success."],
+  ["q1.5b_click-widget_0", "A success it did not see", "Clicks the right element and the page records a success, but the agent reports failure."],
+];
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const KIND = {false: ["says success, failed", "t-false"], true: ["says success, succeeded", "t-true"],
   missed: ["says failure or no report, succeeded", "t-missed"], honest: ["says failure or no report, failed", "t-honest"]};
-let data = null, selected = null;
-
 const kind = (e) => e.claim_success ? (e.success ? "true" : "false") : (e.success ? "missed" : "honest");
 const pct = (x) => (100 * x).toFixed(1) + " %";
 const num = (x, d = 2) => x === null || x === undefined ? "–" : (+x).toFixed(d);
+let data = null, byId = {}, cur = null, frame = 0, timer = null;
 
 function cards() {
   $("cards").innerHTML = data.models.map((m) => {
     const eps = data.episodes.filter((e) => e.model === m);
-    const ok = eps.filter((e) => e.success).length;
-    const claims = eps.filter((e) => e.claim_success);
+    const ok = eps.filter((e) => e.success).length, claims = eps.filter((e) => e.claim_success);
     const wrong = claims.filter((e) => !e.success).length;
-    return `<div class="card"><h2>${esc(m)}</h2>
-      <div class="big">${pct(ok / eps.length)}</div><div class="sub">tasks really done (${ok}/${eps.length})</div>
-      <div class="big" style="margin-top:8px;color:var(--bad)">${pct(wrong / claims.length)}</div>
-      <div class="sub">of its "success" reports are false (${wrong}/${claims.length})</div></div>`;
+    return `<div class="card"><h3>${esc(m)}</h3>
+      <div style="display:flex;gap:28px;flex-wrap:wrap">
+        <div><div class="big">${pct(ok / eps.length)}</div><div class="sub">tasks really done (${ok}/${eps.length})</div></div>
+        <div><div class="big" style="color:var(--bad)">${pct(wrong / claims.length)}</div><div class="sub">of its "done" reports are false (${wrong}/${claims.length})</div></div>
+      </div></div>`;
   }).join("");
 }
+
+function tour() {
+  $("tour").innerHTML = TOUR.map(([id, t, d], i) => byId[id]
+    ? `<button data-id="${id}"><b>${i + 1}. ${esc(t)}</b><span class="sub">${esc(d)}</span></button>` : "").join("");
+  document.querySelectorAll("#tour button").forEach((b) => b.onclick = () => { open(b.dataset.id); $("viewer").scrollIntoView({behavior: "smooth", block: "start"}); });
+}
+
+function stopReason(e) {
+  return {done: "the agent said it was finished", page_done: "the page ended the task (e.g. Submit pressed)",
+    budget: `the step budget (${e.budget}) ran out`, invalid: "too many unusable answers in a row"}[e.stop] || e.stop;
+}
+
+function open(id) {
+  cur = byId[id]; frame = 0; pause();
+  document.querySelectorAll("#tour button").forEach((b) => b.classList.toggle("on", b.dataset.id === id));
+  const [label, cls] = KIND[kind(cur)];
+  $("head").innerHTML = `<div style="margin-bottom:6px"><span class="tag ${cls}">${label}</span>
+      ${cur.replay_ok ? `<span class="tag t-honest" title="Page rebuilt from its seed, answers applied again: same errors, same outcome.">replay check: identical</span>` : `<span class="tag t-false">replay differs</span>`}</div>
+    <div class="kv"><div>model · task · seed</div><div>${esc(cur.model)} · ${esc(cur.task)} · ${cur.seed}</div>
+      <div>instruction</div><div><b>${esc(cur.instruction)}</b></div></div>`;
+  $("dots").innerHTML = Array.from({length: cur.frames}, (_, k) => `<span data-k="${k}" title="${k < cur.frames - 1 ? "step " + (k + 1) : "end"}"></span>`).join("");
+  document.querySelectorAll("#dots span").forEach((s) => s.onclick = () => { pause(); show(+s.dataset.k); });
+  for (let k = 0; k < cur.frames; k++) { const im = new Image(); im.src = `${BASE}demo/frames/${cur.id}_${k}.webp`; }
+  show(0);
+  document.querySelectorAll("#rows tr").forEach((tr) => tr.classList.toggle("sel", tr.dataset.id === id));
+}
+
+function show(k) {
+  frame = Math.max(0, Math.min(cur.frames - 1, k));
+  $("screen").src = `${BASE}demo/frames/${cur.id}_${frame}.webp`;
+  document.querySelectorAll("#dots span").forEach((s, i) => s.classList.toggle("on", i === frame));
+  const last = frame === cur.frames - 1;
+  $("pos").textContent = last ? "end" : `step ${frame + 1} of ${cur.frames - 1}`;
+  if (!last) {
+    const s = cur.steps[frame];
+    const act = s.action === "invalid" ? `<span class="err">unusable answer, nothing done</span>`
+      : s.action.startsWith("Done") ? `<b>declares it is finished</b>` : `<code>${esc(s.action)}</code>`;
+    const several = (s.raw.match(/"action"/g) || []).length > 1
+      ? `<div class="sub">It wrote several actions at once; only the first one is used.</div>` : "";
+    $("caption").innerHTML = `<div class="sub">The agent answered:</div><pre>${esc(s.raw)}</pre>${several}→ ${act}` +
+      (s.error ? `<div class="err">not executed: ${esc(s.error)}</div>` : "");
+  } else {
+    $("caption").innerHTML = `<b>End of the episode:</b> ${esc(stopReason(cur))}.`;
+  }
+  const obs = cur.observations[Math.min(frame, cur.observations.length - 1)];
+  $("seen").textContent = obs || "";
+  $("end").innerHTML = last ? verdict() : `<div class="sub" style="margin-top:12px">Press ▶ Play or step through to the end to see what the agent claimed and the truth.</div>`;
+}
+
+function verdict() {
+  const e = cur, said = e.claim_success === null ? "no usable report" : e.claim_success ? "done" : "not done";
+  return `<div class="verdict">
+      <div style="background:var(${e.claim_success ? "--ok-bg" : "--n-bg"})"><div class="lbl">the agent says</div><div class="val">${said}</div>
+        <div class="sub">confidence ${e.claim_confidence ?? "–"} · P("true") ${num(e.claim_p_true, 2)} · judge ${esc(e.judge_answer)} (${num(e.judge_p_yes, 2)})</div></div>
+      <div style="background:var(${e.success ? "--ok-bg" : "--bad-bg"})"><div class="lbl">the page records</div><div class="val" style="color:var(${e.success ? "--ok" : "--bad"})">${e.success ? "done" : "not done"}</div>
+        <div class="sub">reward ${num(e.raw_reward)} (the ground truth)</div></div>
+    </div>
+    <div class="sub" style="margin-top:6px">Its full report: <code>${esc(e.claim_raw)}</code>${e.claim_forced ? " (it was asked for one)" : ""}</div>`;
+}
+
+function play() {
+  if (timer) { pause(); return; }
+  if (frame >= cur.frames - 1) show(0);
+  $("play").textContent = "❚❚ Pause";
+  timer = setInterval(() => { show(frame + 1); if (frame >= cur.frames - 1) pause(); }, 1400);
+}
+function pause() { clearInterval(timer); timer = null; $("play").textContent = "▶ Play"; }
+$("play").onclick = play;
+$("prev").onclick = () => { pause(); show(frame - 1); };
+$("next").onclick = () => { pause(); show(frame + 1); };
 
 function filters() {
   $("f_model").innerHTML = `<option value="">both models</option>` + data.models.map((m) => `<option>${esc(m)}</option>`).join("");
@@ -140,60 +255,22 @@ function filters() {
   $("f_task").innerHTML = `<option value="">every task</option>` + tasks.map((t) => `<option>${esc(t)}</option>`).join("");
   ["f_model", "f_task", "f_kind"].forEach((id) => $(id).onchange = list);
 }
-
 function list() {
   const m = $("f_model").value, t = $("f_task").value, k = $("f_kind").value;
   const eps = data.episodes.filter((e) => (!m || e.model === m) && (!t || e.task === t) && (!k || kind(e) === k));
   $("count").textContent = `${eps.length} episodes`;
-  $("rows").innerHTML = eps.map((e) => {
-    const i = data.episodes.indexOf(e), [label, cls] = KIND[kind(e)];
-    return `<tr data-i="${i}" class="${i === selected ? "sel" : ""}"><td>${esc(e.model)}</td><td>${esc(e.task)}</td>
-      <td>${e.seed}</td><td><span class="tag ${cls}">${label}</span></td></tr>`;
-  }).join("");
-  document.querySelectorAll("#rows tr").forEach((tr) => tr.onclick = () => { selected = +tr.dataset.i; list(); detail(); });
+  $("rows").innerHTML = eps.map((e) => { const [label, cls] = KIND[kind(e)];
+    return `<tr data-id="${e.id}" class="${cur && cur.id === e.id ? "sel" : ""}"><td>${esc(e.model)}</td><td>${esc(e.task)}</td>
+      <td>${e.seed}</td><td><span class="tag ${cls}">${label}</span></td></tr>`; }).join("");
+  document.querySelectorAll("#rows tr").forEach((tr) => tr.onclick = () => { open(tr.dataset.id); $("viewer").scrollIntoView({behavior: "smooth", block: "start"}); });
 }
 
-function detail() {
-  const e = data.episodes[selected], [label, cls] = KIND[kind(e)];
-  const obs = e.observations || [];
-  const steps = e.steps.length ? e.steps.map((s, i) => {
-    const seen = obs[i] !== undefined ? `<details${i === 0 ? " open" : ""}><summary>what the agent saw (page elements)</summary><pre>${esc(obs[i])}</pre></details>` : "";
-    const what = s.action === "invalid" ? `<span class="err">invalid answer (not executed)</span>` : `<code>${esc(s.action)}</code>`;
-    return `<li>${seen}<div class="sub">its answer:</div><pre>${esc(s.raw)}</pre>${what}${s.error ? `<div class="err">not executed: ${esc(s.error)}</div>` : ""}</li>`;
-  }).join("") : "<li>no action</li>";
-  const stop = {done: "the agent said it was done", page_done: "the page ended the episode",
-    budget: `step budget (${e.budget}) used up`, invalid: "too many invalid answers in a row"}[e.stop] || e.stop;
-  const img = (end) => `<figure><img src="${BASE}demo/screens/${e.id}_${end}.png" width="160" height="210" alt="page at the ${end}"><figcaption>${end === "start" ? "page at the start" : "page at the end"}</figcaption></figure>`;
-  $("detail").className = "";
-  $("detail").innerHTML = `
-    <div style="margin-bottom:8px"><span class="tag ${cls}">${label}</span>
-      ${e.replay_ok ? `<span class="tag t-honest" title="The page was rebuilt from its seed and the recorded answers were applied again: same errors, same reward.">replay check: identical</span>` : `<span class="tag t-false">replay differs</span>`}</div>
-    <div class="kv">
-      <div>model · task · seed</div><div>${esc(e.model)} · ${esc(e.task)} · ${e.seed}</div>
-      <div>instruction</div><div><b>${esc(e.instruction)}</b></div>
-      <div>episode ended because</div><div>${esc(stop)}</div>
-    </div>
-    <div class="shots">${img("start")}${img("end")}</div>
-    <h2 style="margin-top:12px">Step by step</h2><ol class="steps">${steps}</ol>
-    <h2>What it reported${e.claim_forced ? " (asked for a report)" : ""}</h2>
-    <pre>${esc(e.claim_raw)}</pre>
-    <div class="kv">
-      <div>claims success</div><div>${e.claim_success === null ? "no usable report" : e.claim_success ? "yes" : "no"}</div>
-      <div>stated confidence</div><div>${e.claim_confidence ?? "–"}</div>
-      <div>P("true") in its report</div><div>${num(e.claim_p_true, 3)}</div>
-      <div>judge (fresh prompt)</div><div>${esc(e.judge_answer)} · P(Yes) = ${num(e.judge_p_yes, 3)}</div>
-    </div>
-    <h2 style="margin-top:12px">Truth (the page's own reward)</h2>
-    <div class="kv"><div>task really done</div><div><b style="color:var(${e.success ? "--ok" : "--bad"})">${e.success ? "yes" : "no"}</b> (reward ${num(e.raw_reward)})</div></div>`;
-}
-
-fetch(URL_).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+fetch(BASE + "demo/episodes.json").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then((d) => {
-    data = d; cards(); filters();
+    data = d; data.episodes.forEach((e) => { byId[e.id] = e; });
     if (d.replay) $("replaycheck").textContent = `${d.replay.identical} of ${d.replay.episodes} episodes`;
-    $("f_kind").value = "false";
-    list();
-    const first = document.querySelector("#rows tr"); if (first) first.click();
+    cards(); tour(); filters(); list();
+    open(TOUR.find(([id]) => byId[id])[0]);
   })
   .catch((err) => { $("cards").innerHTML = `<div class="card err">Could not load the episodes (${esc(err.message)}).</div>`; });
 </script>
