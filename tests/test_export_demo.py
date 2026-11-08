@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -48,3 +50,39 @@ def test_committed_export_matches_reported_counts():
         assert sum(e["success"] for e in eps) == by_short[m]["successes"]
         false_claims = sum(bool(e["claim_success"]) and not e["success"] for e in eps)
         assert false_claims == by_short[m]["claims"]["false_success_claims"]
+
+
+def test_committed_replay_is_complete_and_identical():
+    data = json.loads((ROOT / "demo" / "episodes.json").read_text(encoding="utf-8"))
+    assert data["replay"] == {"episodes": 600, "identical": 600}
+    for e in data["episodes"]:
+        assert e["replay_ok"] and e["observations"]
+        for end in ("start", "end"):
+            assert (ROOT / "demo" / "screens" / f"{e['id']}_{end}.png").exists()
+
+
+@pytest.mark.browser
+def test_replaying_an_episode_reproduces_the_committed_observations(tmp_path, monkeypatch):
+    from playwright.sync_api import sync_playwright
+
+    from webverify.env import MiniWobEnv
+
+    mod = _replay_mod()
+    monkeypatch.setattr(mod, "SCREENS", tmp_path)
+    data = json.loads((ROOT / "demo" / "episodes.json").read_text(encoding="utf-8"))
+    e = next(x for x in data["episodes"] if len(x["steps"]) >= 2)
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        out = mod.replay(MiniWobEnv(browser.new_page(viewport={"width": 400, "height": 400})), e)
+        browser.close()
+    assert out["replay_ok"]
+    assert out["observations"] == e["observations"]
+    assert (tmp_path / f"{e['id']}_end.png").exists()
+
+
+def _replay_mod():
+    spec = importlib.util.spec_from_file_location(
+        "replay_for_demo", ROOT / "scripts" / "replay_for_demo.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
