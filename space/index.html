@@ -51,6 +51,11 @@
   ol.steps li { margin-bottom: 6px; }
   .err { color: var(--bad); font-size: 13px; }
   #status { font-size: 13px; color: var(--muted); }
+  .shots { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+  .shots figure { margin: 0; }
+  .shots img { border: 1px solid var(--line); border-radius: 4px; display: block; background: #fff; }
+  .shots figcaption { font-size: 12px; color: var(--muted); text-align: center; }
+  details summary { cursor: pointer; font-size: 13px; color: var(--accent); }
   footer { margin-top: 24px; color: var(--muted); font-size: 13px; }
 </style>
 </head>
@@ -60,8 +65,9 @@
   <p class="lead">A local language-model agent (Qwen2.5 0.5B or 1.5B) was given 15 tasks on
     MiniWoB++ web pages, 20 times each. At the end it reported success or failure; the page itself
     recorded whether the task was really done. <b>This page replays the 600 recorded episodes</b>
-    (the models are not running here): pick one to see what the agent did, what it claimed, and
-    the truth.</p>
+    (the models are not running here): pick one to see the page, what the agent saw and did, what
+    it claimed, and the truth. The pages were rebuilt by replaying the recorded answers on the same
+    seeded pages: <b id="replaycheck">all episodes</b> reproduce the recorded outcome exactly.</p>
   <p class="lead">Code, protocol and full analysis:
     <a href="https://github.com/echchakarhaitam-cyber/web-agent-verification" target="_blank"
     rel="noopener">github.com/echchakarhaitam-cyber/web-agent-verification</a>.</p>
@@ -102,8 +108,9 @@
 </main>
 
 <script>
-const COMMIT = "0523234238e241fa8612caf2c5a78bb8d2137b9a";
-const URL_ = `https://cdn.jsdelivr.net/gh/echchakarhaitam-cyber/web-agent-verification@${COMMIT}/demo/episodes.json`;
+const COMMIT = "4f22fdbc5af4a3d168df1b456ad47d596f0ee990";
+const BASE = `https://cdn.jsdelivr.net/gh/echchakarhaitam-cyber/web-agent-verification@${COMMIT}/`;
+const URL_ = BASE + "demo/episodes.json";
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const KIND = {false: ["says success, failed", "t-false"], true: ["says success, succeeded", "t-true"],
@@ -148,20 +155,26 @@ function list() {
 
 function detail() {
   const e = data.episodes[selected], [label, cls] = KIND[kind(e)];
-  const steps = e.steps.length ? e.steps.map((s) => `<li><code>${esc(s.action)}</code>
-      <pre>${esc(s.raw)}</pre>${s.error ? `<div class="err">not executed: ${esc(s.error)}</div>` : ""}</li>`).join("")
-    : "<li>no action</li>";
+  const obs = e.observations || [];
+  const steps = e.steps.length ? e.steps.map((s, i) => {
+    const seen = obs[i] !== undefined ? `<details${i === 0 ? " open" : ""}><summary>what the agent saw (page elements)</summary><pre>${esc(obs[i])}</pre></details>` : "";
+    const what = s.action === "invalid" ? `<span class="err">invalid answer (not executed)</span>` : `<code>${esc(s.action)}</code>`;
+    return `<li>${seen}<div class="sub">its answer:</div><pre>${esc(s.raw)}</pre>${what}${s.error ? `<div class="err">not executed: ${esc(s.error)}</div>` : ""}</li>`;
+  }).join("") : "<li>no action</li>";
   const stop = {done: "the agent said it was done", page_done: "the page ended the episode",
     budget: `step budget (${e.budget}) used up`, invalid: "too many invalid answers in a row"}[e.stop] || e.stop;
+  const img = (end) => `<figure><img src="${BASE}demo/screens/${e.id}_${end}.png" width="160" height="210" alt="page at the ${end}"><figcaption>${end === "start" ? "page at the start" : "page at the end"}</figcaption></figure>`;
   $("detail").className = "";
   $("detail").innerHTML = `
-    <div style="margin-bottom:8px"><span class="tag ${cls}">${label}</span></div>
+    <div style="margin-bottom:8px"><span class="tag ${cls}">${label}</span>
+      ${e.replay_ok ? `<span class="tag t-honest" title="The page was rebuilt from its seed and the recorded answers were applied again: same errors, same reward.">replay check: identical</span>` : `<span class="tag t-false">replay differs</span>`}</div>
     <div class="kv">
       <div>model · task · seed</div><div>${esc(e.model)} · ${esc(e.task)} · ${e.seed}</div>
       <div>instruction</div><div><b>${esc(e.instruction)}</b></div>
       <div>episode ended because</div><div>${esc(stop)}</div>
     </div>
-    <h2 style="margin-top:12px">What the agent did</h2><ol class="steps">${steps}</ol>
+    <div class="shots">${img("start")}${img("end")}</div>
+    <h2 style="margin-top:12px">Step by step</h2><ol class="steps">${steps}</ol>
     <h2>What it reported${e.claim_forced ? " (asked for a report)" : ""}</h2>
     <pre>${esc(e.claim_raw)}</pre>
     <div class="kv">
@@ -177,6 +190,7 @@ function detail() {
 fetch(URL_).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then((d) => {
     data = d; cards(); filters();
+    if (d.replay) $("replaycheck").textContent = `${d.replay.identical} of ${d.replay.episodes} episodes`;
     $("f_kind").value = "false";
     list();
     const first = document.querySelector("#rows tr"); if (first) first.click();
