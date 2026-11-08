@@ -1,5 +1,8 @@
 # webverify __ can you trust a small web agent when it says "done"?
 
+**See it:** [replay the 600 recorded episodes on Hugging Face](https://huggingface.co/spaces/haitam1255/web-agent-replay)
+(what the agent did, what it claimed, and what the page recorded).
+
 A web agent ends every task with a report: *success* or *failure*. If nobody re-checks a reported
 success, a false one is never caught. This project measures how often small local language-model
 agents claim false successes, and whether cheap signals (the agent's own confidence, its token
