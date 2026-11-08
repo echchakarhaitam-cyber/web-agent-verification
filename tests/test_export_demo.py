@@ -57,8 +57,9 @@ def test_committed_replay_is_complete_and_identical():
     assert data["replay"] == {"episodes": 600, "identical": 600}
     for e in data["episodes"]:
         assert e["replay_ok"] and e["observations"]
-        for end in ("start", "end"):
-            assert (ROOT / "demo" / "screens" / f"{e['id']}_{end}.png").exists()
+        assert e["frames"] >= 2
+        for k in range(e["frames"]):
+            assert (ROOT / "demo" / "frames" / f"{e['id']}_{k}.webp").exists()
 
 
 @pytest.mark.browser
@@ -68,7 +69,7 @@ def test_replaying_an_episode_reproduces_the_committed_observations(tmp_path, mo
     from webverify.env import MiniWobEnv
 
     mod = _replay_mod()
-    monkeypatch.setattr(mod, "SCREENS", tmp_path)
+    monkeypatch.setattr(mod, "FRAMES", tmp_path)
     data = json.loads((ROOT / "demo" / "episodes.json").read_text(encoding="utf-8"))
     e = next(x for x in data["episodes"] if len(x["steps"]) >= 2)
     with sync_playwright() as p:
@@ -77,7 +78,8 @@ def test_replaying_an_episode_reproduces_the_committed_observations(tmp_path, mo
         browser.close()
     assert out["replay_ok"]
     assert out["observations"] == e["observations"]
-    assert (tmp_path / f"{e['id']}_end.png").exists()
+    assert out["frames"] == e["frames"]
+    assert (tmp_path / f"{e['id']}_{e['frames'] - 1}.webp").exists()
 
 
 def _replay_mod():
